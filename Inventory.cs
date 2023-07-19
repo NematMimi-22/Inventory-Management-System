@@ -1,4 +1,5 @@
-﻿using Test;
+﻿using System;
+using Test;
 bool exit = false;
 
 while (!exit)
@@ -17,14 +18,14 @@ while (!exit)
     switch (input)
     {
         case "1":
-            Console.WriteLine("You selected Option 1.");
-    
+            Product.AddProduct();
             Console.ReadLine();
 
             break;
 
         case "2":
-            Console.WriteLine("You selected Option 2.");
+            Console.WriteLine("The List of all Products:");
+            Product.DisplayProducts();
             Console.ReadLine();
             break;
 
