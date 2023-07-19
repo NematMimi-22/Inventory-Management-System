@@ -40,11 +40,20 @@ while (!exit)
         case "5":
             Console.WriteLine("Please enter product name: ");
             string ProductName = Console.ReadLine();
-            Console.WriteLine("The product information: ");
+            Product pro=Product.ValidProduct(ProductName);
+            if (pro != null)
+            {
+                Console.WriteLine("The product information: ");
 
-            Console.WriteLine($"The Product Name: {Product.ValidProduct(ProductName).Name}");
-            Console.WriteLine($"The Product Price: {Product.ValidProduct(ProductName).price}");
-            Console.WriteLine($"The Product Quantity: {Product.ValidProduct(ProductName).quantity}");
+                Console.WriteLine($"The Product Name: {pro.Name}");
+                Console.WriteLine($"The Product Price: {pro.price}");
+                Console.WriteLine($"The Product Quantity: {pro.quantity}");
+               
+            }
+            else
+            {
+                Console.WriteLine($"Product {ProductName} not found.");
+            }
 
             Console.ReadLine();
             break;

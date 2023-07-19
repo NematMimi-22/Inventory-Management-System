@@ -27,17 +27,10 @@ namespace Test
         {
             // Find the first product object in the list whose name matches the given name
             Product product = products.FirstOrDefault(p => p.Name == name);
-            if (product!= null)
-            {
+        
                 return product;
-            }
-            else
-            {
-
-                Console.WriteLine($"Product with name '{name}' not found.");
-                return product;
-            }
-
+            
+       
         }
 
         public static void DeleteProduct(string name)
