@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using Test;
 bool exit = false;
 
@@ -30,7 +31,9 @@ while (!exit)
             break;
 
         case "3":
-            Console.WriteLine("You selected Option 2.");
+            Console.WriteLine("Please enter product name: ");
+            string ProductNameToUpdate = Console.ReadLine();
+            Product.UpdateProduct(ProductNameToUpdate);
             Console.ReadLine();
             break;
 

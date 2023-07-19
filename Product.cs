@@ -60,6 +60,34 @@ namespace Test
 
         }
 
+
+        public static void UpdateProduct(string name)
+        {
+            Product product = products.FirstOrDefault(p => p.Name == name);
+
+            if (product != null)
+            {
+                Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
+
+                Console.WriteLine("Update the product: ");
+                Console.Write("Product Name: ");
+                string newName = Console.ReadLine();
+                Console.Write("Product Price: ");
+                decimal newPrice = Convert.ToDecimal(Console.ReadLine());
+                Console.Write("Product Quantity: ");
+                int newQuantity = Convert.ToInt32(Console.ReadLine());
+
+                product.Name = newName;
+                product.price = newPrice;
+                product.quantity = newQuantity;
+            }
+            else
+            {
+                Console.WriteLine("Product not found.");
+            }
+        }
+
+
         public static void AddProduct()
         {
 
@@ -96,7 +124,7 @@ namespace Test
         foreach (Product product in products)
             {
 
-                   Console.WriteLine($"The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}");
+                   Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
             }
 
 
