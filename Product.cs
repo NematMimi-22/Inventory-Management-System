@@ -14,7 +14,6 @@ namespace Test
             
         }
         public string Name { get; set; }
-        // "?" indicating that the price is not available or hasn't been set.
         public decimal ? price { get; set; }
         public int _quantity { get; set; }
 
