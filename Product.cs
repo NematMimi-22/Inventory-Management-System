@@ -40,6 +40,26 @@ namespace Test
 
         }
 
+        public static void DeleteProduct(string name)
+        {
+            // Find the first product object in the list whose name matches the given name
+            Product product = products.FirstOrDefault(p => p.Name == name);
+            if (product != null)
+            {
+                products.Remove(product);
+
+                Console.WriteLine($"'{name}'Product is deleted succesfully.");
+
+            }
+            else
+            {
+
+                Console.WriteLine($"Product with name '{name}' not found.");
+             
+            }
+
+        }
+
         public static void AddProduct()
         {
 

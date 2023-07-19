@@ -36,18 +36,20 @@ while (!exit)
 
         case "5":
             Console.WriteLine("Please enter product name: ");
-            string output = Console.ReadLine();
+            string ProductName = Console.ReadLine();
             Console.WriteLine("The product information: ");
 
-            Console.WriteLine($"The Product Name: {Product.ValidProduct(output).Name}");
-            Console.WriteLine($"The Product Price: {Product.ValidProduct(output).price}");
-            Console.WriteLine($"The Product Quantity: {Product.ValidProduct(output).quantity}");
+            Console.WriteLine($"The Product Name: {Product.ValidProduct(ProductName).Name}");
+            Console.WriteLine($"The Product Price: {Product.ValidProduct(ProductName).price}");
+            Console.WriteLine($"The Product Quantity: {Product.ValidProduct(ProductName).quantity}");
 
             Console.ReadLine();
             break;
 
         case "4":
-            Console.WriteLine("You selected Option 2.");
+            Console.WriteLine("Please enter the name of product you want to delete: ");
+            string DeletedProductName = Console.ReadLine();
+            Product.DeleteProduct(DeletedProductName);
             Console.ReadLine();
             break;
         case "6":
