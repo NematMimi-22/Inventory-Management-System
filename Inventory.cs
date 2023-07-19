@@ -58,6 +58,8 @@ using Test;
             product.Name = newName;
             product.price = price;
             product.quantity = quantity;
+            Console.WriteLine($"'{name}'Product is updated succesfully.");
+
         }
         else
         {
