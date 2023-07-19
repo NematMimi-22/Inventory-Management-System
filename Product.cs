@@ -72,14 +72,24 @@ namespace Test
                 Console.WriteLine("Update the product: ");
                 Console.Write("Product Name: ");
                 string newName = Console.ReadLine();
+                decimal price;
                 Console.Write("Product Price: ");
-                decimal newPrice = Convert.ToDecimal(Console.ReadLine());
-                Console.Write("Product Quantity: ");
-                int newQuantity = Convert.ToInt32(Console.ReadLine());
 
-                product.Name = newName;
-                product.price = newPrice;
-                product.quantity = newQuantity;
+                bool isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
+                Console.Write("Product Quantity: ");
+                int quantity;
+                bool isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+                if (isValidPrice && isValidQuantity)
+                {
+
+                    product.Name = newName;
+                    product.price = price;
+                    product.quantity = quantity;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input for price or quantity. Please enter a valid values");
+                }
             }
             else
             {
@@ -97,21 +107,38 @@ namespace Test
 
 
 
+         
+
             Console.Write("Product Price: ");
-            decimal price = Convert.ToDecimal(Console.ReadLine());
+            decimal price;
+         
+            bool isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
             Console.Write("Product Quantity: ");
-            int quantity = Convert.ToInt32(Console.ReadLine());
-            Product product = new Product
+            int quantity;
+            bool isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+            if (isValidPrice && isValidQuantity)
             {
-                Name = name,
-                price = price,
-                quantity = quantity
 
-            };
+                Product product = new Product
+                {
+                    Name = name,
+                    price = price,
+                    quantity = quantity
 
-            Product.products.Add(product);
+                };
 
-            Console.WriteLine("Product is added.");
+                Product.products.Add(product);
+
+                Console.WriteLine("Product is added.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input for price or quantity. Please enter a valid values");
+            }
+
+
+
+       
 
 
 
