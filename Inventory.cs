@@ -24,7 +24,6 @@ public class Inventory
                 case "1":
                     productRepository.AddProduct();
                     Console.ReadLine();
-
                     break;
 
                 case "2":
@@ -43,14 +42,13 @@ public class Inventory
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     string ProductName = Console.ReadLine();
-                    var pro = ProductRepository.ValidProduct(ProductName);
-
-                    if (pro != null)
+                    var product = ProductRepository.ValidProduct(ProductName);
+                    if (product != null)
                     {
                         Console.WriteLine("The product information: ");
-                        Console.WriteLine($"The Product Name: {pro.Name}");
-                        Console.WriteLine($"The Product Price: {pro.price}");
-                        Console.WriteLine($"The Product Quantity: {pro.quantity}");
+                        Console.WriteLine($"The Product Name: {product.Name}");
+                        Console.WriteLine($"The Product Price: {product.price}");
+                        Console.WriteLine($"The Product Quantity: {product.quantity}");
                     }
                     else
                     {
@@ -66,6 +64,7 @@ public class Inventory
                     productRepository.DeleteProduct(DeletedProductName);
                     Console.ReadLine();
                     break;
+
                 case "6":
                     exit = true;
                     break;
