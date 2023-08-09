@@ -5,7 +5,8 @@ public class Inventory
     public static void Main()
     {
         ProductRepository productRepository = new ProductRepository();
-        bool exit = false;
+        var exit = false;
+
         while (!exit)
         {
             Console.Clear();
@@ -18,7 +19,7 @@ public class Inventory
             Console.WriteLine("6. Exit");
             Console.WriteLine();
             Console.Write("Enter your choice: ");
-            string input = Console.ReadLine();
+            var input = Console.ReadLine();
             switch (input)
             {
                 case "1":
@@ -34,7 +35,7 @@ public class Inventory
 
                 case "3":
                     Console.WriteLine("Please enter product name: ");
-                    string ProductNameToUpdate = Console.ReadLine();
+                    var ProductNameToUpdate = Console.ReadLine();
                     productRepository.UpdateProduct(ProductNameToUpdate);
                     Console.ReadLine();
                     break;

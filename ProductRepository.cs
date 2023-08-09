@@ -9,10 +9,10 @@
             string name = Console.ReadLine();
             Console.Write("Product Price: ");
             decimal price;
-            bool isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
+            var isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
             Console.Write("Product Quantity: ");
             int quantity;
-            bool isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+            var isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
             if (isValidPrice && isValidQuantity)
             {
                 Product product = new Product
@@ -29,11 +29,14 @@
                 Console.WriteLine("Invalid input for price or quantity. Please enter a valid values");
             }
         }
+
         public static Product ValidProduct(string name)
         {
+
             return Inventory.Products.FirstOrDefault(p => p.Name == name);
         }
-        public  void DeleteProduct(string name)
+
+        public void DeleteProduct(string name)
         {
             var Product = ValidProduct(name);
             if (Product != null)
@@ -46,6 +49,7 @@
                 Console.WriteLine($"Product with name '{name}' not found.");
             }
         }
+
         public void DisplayProducts()
         {
             foreach (Product product in Inventory.Products)
@@ -64,16 +68,16 @@
                 string newName = Console.ReadLine();
                 decimal price;
                 Console.Write("Product Price: ");
-                bool isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
+                var isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
                 Console.Write("Product Quantity: ");
                 int quantity;
-                bool isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+                var isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
                 if (isValidPrice && isValidQuantity)
                 {
                     product.Name = newName;
                     product.price = price;
                     product.quantity = quantity;
-                    Console.WriteLine($"'{name}'Product is updated succesfully.");
+                    Console.WriteLine($"'{name}'Product is updated successfully.");
                 }
                 else
                 {
