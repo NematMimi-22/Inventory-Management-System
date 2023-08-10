@@ -1,6 +1,4 @@
 ﻿using IMS;
-using System.Text;
-
 public class Inventory 
 {
     private readonly IProductRepository productRepository;
