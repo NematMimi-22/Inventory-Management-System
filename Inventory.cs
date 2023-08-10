@@ -1,10 +1,11 @@
 ﻿using IMS;
-public class Inventory
+public class Inventory : IInventory
 {
-    public static List<Product> Products = new List<Product>();
+    public List<Product> Products { get; } = new List<Product>();
     public static void Main()
     {
-        ProductRepository productRepository = new ProductRepository();
+        IInventory inventory = new Inventory();
+        ProductRepository productRepository = new ProductRepository(inventory);
         var exit = false;
 
         while (!exit)
@@ -43,7 +44,7 @@ public class Inventory
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     string ProductName = Console.ReadLine();
-                    var product = ProductRepository.ValidProduct(ProductName);
+                    var product = productRepository.ValidProduct(ProductName);
                     if (product != null)
                     {
                         Console.WriteLine("The product information: ");

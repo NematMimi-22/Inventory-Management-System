@@ -2,6 +2,12 @@
 {
     public class ProductRepository
     {
+        private readonly IInventory inventory;
+        public ProductRepository(IInventory inventory)
+        {
+            this.inventory = inventory;
+        }
+
         public void AddProduct()
         {
             Console.WriteLine("Add a product: ");
@@ -21,7 +27,7 @@
                     price = price,
                     quantity = quantity
                 };
-                Inventory.Products.Add(product);
+                inventory.Products.Add(product);
                 Console.WriteLine("Product is added.");
             }
             else
@@ -30,10 +36,10 @@
             }
         }
 
-        public static Product ValidProduct(string name)
+        public Product ValidProduct(string name)
         {
 
-            return Inventory.Products.FirstOrDefault(p => p.Name == name);
+            return inventory.Products.FirstOrDefault(p => p.Name == name);
         }
 
         public void DeleteProduct(string name)
@@ -41,7 +47,7 @@
             var Product = ValidProduct(name);
             if (Product != null)
             {
-                Inventory.Products.Remove(Product);
+                inventory.Products.Remove(Product);
                 Console.WriteLine($"'{name}'Product is deleted succesfully.");
             }
             else
@@ -52,14 +58,14 @@
 
         public void DisplayProducts()
         {
-            foreach (Product product in Inventory.Products)
+            foreach (Product product in inventory.Products)
             {
                 Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
             }
         }
         public void UpdateProduct(string name)
         {
-            var product = Inventory.Products.FirstOrDefault(p => p.Name == name);
+            var product = inventory.Products.FirstOrDefault(p => p.Name == name);
             if (product != null)
             {
                 Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
