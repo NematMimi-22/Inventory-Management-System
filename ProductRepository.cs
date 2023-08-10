@@ -8,24 +8,22 @@
             this.inventory = inventory;
         }
 
-        public void AddProduct()
+        public void CreateProduct()
         {
             Console.WriteLine("Add a product: ");
             Console.Write("Product Name: ");
-            string name = Console.ReadLine();
+            var name = Console.ReadLine();
             Console.Write("Product Price: ");
-            decimal price;
-            var isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
+            var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
             Console.Write("Product Quantity: ");
-            int quantity;
-            var isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+            var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
             if (isValidPrice && isValidQuantity)
             {
                 Product product = new Product
                 {
                     Name = name,
-                    price = price,
-                    quantity = quantity
+                    Price = price,
+                    Quantity = quantity
                 };
                 inventory.Products.Add(product);
                 Console.WriteLine("Product is added.");
@@ -36,7 +34,7 @@
             }
         }
 
-        public Product ValidProduct(string name)
+        public Product GetValidProduct(string name)
         {
 
             return inventory.Products.FirstOrDefault(p => p.Name == name);
@@ -44,7 +42,7 @@
 
         public void DeleteProduct(string name)
         {
-            var Product = ValidProduct(name);
+            var Product = GetValidProduct(name);
             if (Product != null)
             {
                 inventory.Products.Remove(Product);
@@ -58,9 +56,9 @@
 
         public void DisplayProducts()
         {
-            foreach (Product product in inventory.Products)
+            foreach (var product in inventory.Products)
             {
-                Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
+                Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.Price}, The product quantity: {product.Quantity}]");
             }
         }
         public void UpdateProduct(string name)
@@ -68,21 +66,19 @@
             var product = inventory.Products.FirstOrDefault(p => p.Name == name);
             if (product != null)
             {
-                Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.price}, The product quantity: {product.quantity}]");
+                Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.Price}, The product quantity: {product.Quantity}]");
                 Console.WriteLine("Update the product: ");
                 Console.Write("Product Name: ");
-                string newName = Console.ReadLine();
-                decimal price;
+                var newName = Console.ReadLine();
                 Console.Write("Product Price: ");
-                var isValidPrice = decimal.TryParse(Console.ReadLine(), out price);
+                var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
                 Console.Write("Product Quantity: ");
-                int quantity;
-                var isValidQuantity = int.TryParse(Console.ReadLine(), out quantity);
+                var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
                 if (isValidPrice && isValidQuantity)
                 {
                     product.Name = newName;
-                    product.price = price;
-                    product.quantity = quantity;
+                    product.Price = price;
+                    product.Quantity = quantity;
                     Console.WriteLine($"'{name}'Product is updated successfully.");
                 }
                 else

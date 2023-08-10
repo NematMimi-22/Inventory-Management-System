@@ -5,7 +5,7 @@ public class Inventory : IInventory
     public static void Main()
     {
         IInventory inventory = new Inventory();
-        ProductRepository productRepository = new ProductRepository(inventory);
+        var productRepository = new ProductRepository(inventory);
         var exit = false;
 
         while (!exit)
@@ -24,7 +24,7 @@ public class Inventory : IInventory
             switch (input)
             {
                 case "1":
-                    productRepository.AddProduct();
+                    productRepository.CreateProduct();
                     Console.ReadLine();
                     break;
 
@@ -43,14 +43,14 @@ public class Inventory : IInventory
 
                 case "5":
                     Console.WriteLine("Please enter product name: ");
-                    string ProductName = Console.ReadLine();
-                    var product = productRepository.ValidProduct(ProductName);
+                    var ProductName = Console.ReadLine();
+                    var product = productRepository.GetValidProduct(ProductName);
                     if (product != null)
                     {
                         Console.WriteLine("The product information: ");
                         Console.WriteLine($"The Product Name: {product.Name}");
-                        Console.WriteLine($"The Product Price: {product.price}");
-                        Console.WriteLine($"The Product Quantity: {product.quantity}");
+                        Console.WriteLine($"The Product Price: {product.Price}");
+                        Console.WriteLine($"The Product Quantity: {product.Quantity}");
                     }
                     else
                     {
@@ -62,7 +62,7 @@ public class Inventory : IInventory
 
                 case "4":
                     Console.WriteLine("Please enter the name of product you want to delete: ");
-                    string DeletedProductName = Console.ReadLine();
+                    var DeletedProductName = Console.ReadLine();
                     productRepository.DeleteProduct(DeletedProductName);
                     Console.ReadLine();
                     break;
