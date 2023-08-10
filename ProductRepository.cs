@@ -46,7 +46,7 @@
             if (Product != null)
             {
                 inventory.Products.Remove(Product);
-                Console.WriteLine($"'{name}'Product is deleted succesfully.");
+                Console.WriteLine($"'{name}'Product is deleted successfully.");
             }
             else
             {
