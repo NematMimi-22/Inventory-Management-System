@@ -1,12 +1,19 @@
 ﻿using IMS;
+using System.Text;
+
 public class Inventory 
 {
+    private readonly IProductRepository productRepository;
+    public Inventory (IProductRepository productRepository)
+    {
+        this.productRepository = productRepository;
+    }
     public static void Main()
     {
-        var Products = new List<Product>();
-        var productRepository = new ProductRepository(Products);
+        var productRepository = new ProductRepository();
+        var Inventory = new Inventory(productRepository);
         var exit = false;
-
+    
         while (!exit)
         {
             Console.Clear();
@@ -23,27 +30,27 @@ public class Inventory
             switch (input)
             {
                 case "1":
-                    productRepository.CreateProduct();
+                    Inventory.productRepository.CreateProduct();
                     Console.ReadLine();
                     break;
 
                 case "2":
                     Console.WriteLine("The List of all Products:");
-                    productRepository.DisplayProducts();
+                    Inventory.productRepository.DisplayProducts();
                     Console.ReadLine();
                     break;
 
                 case "3":
                     Console.WriteLine("Please enter product name: ");
                     var ProductNameToUpdate = Console.ReadLine();
-                    productRepository.UpdateProduct(ProductNameToUpdate);
+                    Inventory.productRepository.UpdateProduct(ProductNameToUpdate);
                     Console.ReadLine();
                     break;
 
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     var ProductName = Console.ReadLine();
-                    var product = productRepository.GetValidProduct(ProductName);
+                    var product = Inventory.productRepository.GetValidProduct(ProductName);
                     if (product != null)
                     {
                         Console.WriteLine("The product information: ");
@@ -62,7 +69,7 @@ public class Inventory
                 case "4":
                     Console.WriteLine("Please enter the name of product you want to delete: ");
                     var DeletedProductName = Console.ReadLine();
-                    productRepository.DeleteProduct(DeletedProductName);
+                    Inventory.productRepository.DeleteProduct(DeletedProductName);
                     Console.ReadLine();
                     break;
 
