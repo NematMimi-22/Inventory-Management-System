@@ -1,11 +1,10 @@
 ﻿using IMS;
-public class Inventory : IInventory
+public class Inventory 
 {
-    public List<Product> Products { get; } = new List<Product>();
     public static void Main()
     {
-        IInventory inventory = new Inventory();
-        var productRepository = new ProductRepository(inventory);
+        var Products = new List<Product>();
+        var productRepository = new ProductRepository(Products);
         var exit = false;
 
         while (!exit)

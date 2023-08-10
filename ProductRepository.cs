@@ -2,10 +2,10 @@
 {
     public class ProductRepository
     {
-        private readonly IInventory inventory;
-        public ProductRepository(IInventory inventory)
+        List<Product> Products { get; }
+        public ProductRepository(List <Product> Products)
         {
-            this.inventory = inventory;
+            this.Products = Products;
         }
 
         public void CreateProduct()
@@ -25,7 +25,7 @@
                     Price = price,
                     Quantity = quantity
                 };
-                inventory.Products.Add(product);
+                Products.Add(product);
                 Console.WriteLine("Product is added.");
             }
             else
@@ -37,7 +37,7 @@
         public Product GetValidProduct(string name)
         {
 
-            return inventory.Products.FirstOrDefault(p => p.Name == name);
+            return Products.FirstOrDefault(p => p.Name == name);
         }
 
         public void DeleteProduct(string name)
@@ -45,7 +45,7 @@
             var Product = GetValidProduct(name);
             if (Product != null)
             {
-                inventory.Products.Remove(Product);
+                Products.Remove(Product);
                 Console.WriteLine($"'{name}'Product is deleted successfully.");
             }
             else
@@ -56,14 +56,14 @@
 
         public void DisplayProducts()
         {
-            foreach (var product in inventory.Products)
+            foreach (var product in Products)
             {
                 Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.Price}, The product quantity: {product.Quantity}]");
             }
         }
         public void UpdateProduct(string name)
         {
-            var product = inventory.Products.FirstOrDefault(p => p.Name == name);
+            var product = Products.FirstOrDefault(p => p.Name == name);
             if (product != null)
             {
                 Console.WriteLine($"[ The product name: {product.Name}, The product price: {product.Price}, The product quantity: {product.Quantity}]");
