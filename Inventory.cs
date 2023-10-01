@@ -13,8 +13,8 @@ public class Inventory
         IProductRepository productRepository;
         Inventory inventory;
         Console.WriteLine("Choose a repository type:");
-        Console.WriteLine("1. Normal Repository");
-        Console.WriteLine("2. MSSQL Repository");
+        Console.WriteLine("1. No Database");
+        Console.WriteLine("2. MSSQL Database");
         Console.Write("Enter your choice: ");
         var repoChoice = Console.ReadLine();
 
