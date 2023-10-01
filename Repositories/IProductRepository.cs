@@ -1,4 +1,4 @@
-﻿namespace IMS
+﻿namespace IMS.Repositories
 {
     public interface IProductRepository
     {

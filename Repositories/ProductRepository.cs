@@ -1,9 +1,9 @@
-﻿namespace IMS
+﻿namespace IMS.Repositories
 {
     public class ProductRepository : IProductRepository
     {
         public List<Product> Products = new List<Product>();
- 
+
         public void CreateProduct()
         {
             Console.WriteLine("Add a product: ");
@@ -33,7 +33,7 @@
         public Product GetValidProduct(string name)
         {
 
-            return (Product)Products.FirstOrDefault(p => p.Name == name);
+            return Products.FirstOrDefault(p => p.Name == name);
         }
 
         public void DeleteProduct(string name)
