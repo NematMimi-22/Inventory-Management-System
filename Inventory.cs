@@ -9,12 +9,12 @@ public class Inventory
     }
     public static void Main()
     {
-        bool exit = false;
         IProductRepository productRepository;
         Inventory inventory;
         Console.WriteLine("Choose a repository type:");
         Console.WriteLine("1. No Database");
         Console.WriteLine("2. MSSQL Database");
+        Console.WriteLine("3. Monogo Database");
         Console.Write("Enter your choice: ");
         var repoChoice = Console.ReadLine();
 
@@ -25,14 +25,23 @@ public class Inventory
                 inventory = new Inventory(productRepository);
                 break;
             case "2":
-                productRepository = new ProductRepositoryMSSQL();
+                productRepository = new MSSQLProductRepository();
+                inventory = new Inventory(productRepository);
+                break;
+            case "3":
+                productRepository = new MongoDBProductRepository();
                 inventory = new Inventory(productRepository);
                 break;
             default:
                 Console.WriteLine("Invalid choice. Exiting...");
                 return;
         }
+        bool exit = false;
+        exit = MainMenu(exit, inventory);
+    }
 
+    private static bool MainMenu(bool exit, Inventory inventory)
+    {
         while (!exit)
         {
             Console.Clear();
@@ -69,7 +78,8 @@ public class Inventory
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     var ProductName = Console.ReadLine();
-                    inventory._productRepository.GetValidProduct(ProductName);
+                    var product = inventory._productRepository.GetValidProduct(ProductName);
+                    Console.WriteLine($"Name: {product.Name}, Price: {product.Price}, Quantity: {product.Quantity}");
                     Console.ReadLine();
                     break;
 
@@ -90,5 +100,7 @@ public class Inventory
                     break;
             }
         }
+
+        return exit;
     }
 }

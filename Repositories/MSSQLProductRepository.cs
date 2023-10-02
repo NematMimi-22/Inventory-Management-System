@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 namespace IMS
 {
-    public class ProductRepositoryMSSQL : IProductRepository
+    public class MSSQLProductRepository : IProductRepository
     {
         private string connectionString = "Server=DESKTOP-CUQN3UP\\SQLEXPRESS;Database=IMS;Integrated Security=True;TrustServerCertificate=true;";
 
