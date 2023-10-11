@@ -36,8 +36,7 @@ public class Inventory
                 Console.WriteLine("Invalid choice. Exiting...");
                 return;
         }
-        bool exit = false;
-        exit = MainMenu(exit, inventory);
+        bool exit = MainMenu(false, inventory);
     }
 
     private static bool MainMenu(bool exit, Inventory inventory)
@@ -58,7 +57,21 @@ public class Inventory
             switch (input)
             {
                 case "1":
-                    inventory._productRepository.CreateProduct();
+                    Console.WriteLine("Add a product: ");
+                    var userInputHandler = new UserInputHandler();
+                    var name = userInputHandler.GetProductName();
+                    var isValidPrice = userInputHandler.TryGetProductPrice(out var price);
+                    var isValidQuantity = userInputHandler.TryGetProductQuantity(out var quantity);
+                    if (isValidPrice && isValidQuantity)
+                    {
+                        var newProduct = new Product
+                        {
+                            Name = name,
+                            Price = price,
+                            Quantity = quantity
+                        };
+                        inventory._productRepository.CreateProduct(newProduct);
+                    }
                     Console.ReadLine();
                     break;
 
@@ -71,15 +84,17 @@ public class Inventory
                 case "3":
                     Console.WriteLine("Please enter product name: ");
                     var ProductNameToUpdate = Console.ReadLine();
-                    inventory._productRepository.UpdateProduct(ProductNameToUpdate);
+                    var product = inventory._productRepository.GetValidProduct(ProductNameToUpdate);
+                    inventory._productRepository.UpdateProduct(product);
                     Console.ReadLine();
                     break;
 
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     var ProductName = Console.ReadLine();
-                    var product = inventory._productRepository.GetValidProduct(ProductName);
-                    Console.WriteLine($"Name: {product.Name}, Price: {product.Price}, Quantity: {product.Quantity}");
+                    var ToUpdatedproduct = inventory._productRepository.GetValidProduct(ProductName);
+                    Console.WriteLine($"Name: {ToUpdatedproduct.Name}, Price: {ToUpdatedproduct.Price}, Quantity: {ToUpdatedproduct.Quantity}");
+                    inventory._productRepository.UpdateProduct(ToUpdatedproduct);
                     Console.ReadLine();
                     break;
 

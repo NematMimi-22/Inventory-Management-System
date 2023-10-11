@@ -20,25 +20,9 @@ namespace IMS.Repositories
             return _collection.Find(filter).FirstOrDefault();
         }
 
-        public void CreateProduct()
+        public void CreateProduct(Product product)
         {
-            Console.WriteLine("Add a product: ");
-            Console.Write("Product Name: ");
-            var name = Console.ReadLine();
-            Console.Write("Product Price: ");
-            var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
-            Console.Write("Product Quantity: ");
-            var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
-            if (isValidPrice && isValidQuantity)
-            {
-                var product = new Product
-                {
-                    Name = name,
-                    Price = price,
-                    Quantity = quantity
-                };
-                _collection.InsertOne(product);
-            }
+            _collection.InsertOne(product);           
         }
 
         public void DisplayProducts()
@@ -51,19 +35,16 @@ namespace IMS.Repositories
             }
         }
 
-        public void UpdateProduct(string oldProductName)
+        public void UpdateProduct(Product product)
         {
             Console.WriteLine("Update the product: ");
-            Console.Write("Product Name: ");
-            var newName = Console.ReadLine();
-            Console.Write("Product Price: ");
-            var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
-            Console.Write("Product Quantity: ");
-            var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
-
+            var userInputHandler = new UserInputHandler();
+            var newName = userInputHandler.GetProductName();
+            var isValidPrice = userInputHandler.TryGetProductPrice(out var price);
+            var isValidQuantity = userInputHandler.TryGetProductQuantity(out var quantity);
             if (isValidPrice && isValidQuantity)
             {
-                var filter = Builders<Product>.Filter.Eq("PName", oldProductName);
+                var filter = Builders<Product>.Filter.Eq("PName", product.Name);
                 var update = Builders<Product>.Update
                     .Set("PName", newName)
                     .Set("Price", price)

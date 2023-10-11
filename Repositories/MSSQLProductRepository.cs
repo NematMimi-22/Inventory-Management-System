@@ -28,25 +28,17 @@ namespace IMS
             return null;
         }
 
-        public void CreateProduct()
+        public void CreateProduct(Product product)
         {
-            Console.WriteLine("Add a product: ");
-            Console.Write("Product Name: ");
-            var name = Console.ReadLine();
-            Console.Write("Product Price: ");
-            var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
-            Console.Write("Product Quantity: ");
-            var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
-            if (isValidPrice && isValidQuantity)
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (var connection = new SqlConnection(connectionString))
                 {
                     var query = "INSERT INTO Products (PName, Price, Quantity) VALUES (@PName, @Price, @Quantity)";
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PName", name);
-                        command.Parameters.AddWithValue("@Price", price);
-                        command.Parameters.AddWithValue("@Quantity", quantity);
+                        command.Parameters.AddWithValue("@PName", product.Name);
+                        command.Parameters.AddWithValue("@Price", product.Price);
+                        command.Parameters.AddWithValue("@Quantity", product.Quantity);
                         connection.Open();
                         command.ExecuteNonQuery();
                     }
@@ -79,7 +71,7 @@ namespace IMS
             }
         }
 
-        public void UpdateProduct(string oldProductName)
+        public void UpdateProduct(Product product)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -87,18 +79,16 @@ namespace IMS
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     Console.WriteLine("Update the product: ");
-                    Console.Write("Product Name: ");
-                    var newName = Console.ReadLine();
-                    Console.Write("Product Price: ");
-                    var isValidPrice = decimal.TryParse(Console.ReadLine(), out var price);
-                    Console.Write("Product Quantity: ");
-                    var isValidQuantity = int.TryParse(Console.ReadLine(), out var quantity);
+                    var userInputHandler = new UserInputHandler();
+                    var newName = userInputHandler.GetProductName();
+                    var isValidPrice = userInputHandler.TryGetProductPrice(out var price);
+                    var isValidQuantity = userInputHandler.TryGetProductQuantity(out var quantity);
                     if (isValidPrice && isValidQuantity)
                     {
                         command.Parameters.AddWithValue("@NewProductName", newName);
                         command.Parameters.AddWithValue("@Price", price);
                         command.Parameters.AddWithValue("@Quantity", quantity);
-                        command.Parameters.AddWithValue("@OldProductName", oldProductName);
+                        command.Parameters.AddWithValue("@OldProductName", product.Name);
                         connection.Open();
                         command.ExecuteNonQuery();
                     }

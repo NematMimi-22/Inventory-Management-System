@@ -2,10 +2,10 @@
 {
     public interface IProductRepository
     {
-        void CreateProduct();
+        void CreateProduct(Product newProduct);
         void DeleteProduct(string name);
         void DisplayProducts();
         Product GetValidProduct(string name);
-        void UpdateProduct(string name);
+        void UpdateProduct(Product product);
     }
 }
