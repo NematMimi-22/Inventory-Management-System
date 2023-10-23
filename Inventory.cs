@@ -1,18 +1,46 @@
 ﻿using IMS;
-public class Inventory 
+using IMS.Repositories;
+public class Inventory
 {
-    private readonly IProductRepository _productRepository
-;
-    public Inventory (IProductRepository productRepository)
+    private readonly IProductRepository _productRepository;
+    public Inventory(IProductRepository productRepository)
     {
         this._productRepository = productRepository;
     }
     public static void Main()
     {
-        var productRepository = new ProductRepository();
-        var inventory = new Inventory(productRepository);
-        var exit = false;
-    
+        IProductRepository productRepository;
+        Inventory inventory;
+        Console.WriteLine("Choose a repository type:");
+        Console.WriteLine("1. No Database");
+        Console.WriteLine("2. MSSQL Database");
+        Console.WriteLine("3. Monogo Database");
+        Console.Write("Enter your choice: ");
+        var repoChoice = Console.ReadLine();
+
+        switch (repoChoice)
+        {
+            case "1":
+                productRepository = new ProductRepository();
+                inventory = new Inventory(productRepository);
+                break;
+            case "2":
+                productRepository = new MSSQLProductRepository();
+                inventory = new Inventory(productRepository);
+                break;
+            case "3":
+                productRepository = new MongoDBProductRepository();
+                inventory = new Inventory(productRepository);
+                break;
+            default:
+                Console.WriteLine("Invalid choice. Exiting...");
+                return;
+        }
+        bool exit = MainMenu(false, inventory);
+    }
+
+    private static bool MainMenu(bool exit, Inventory inventory)
+    {
         while (!exit)
         {
             Console.Clear();
@@ -29,7 +57,21 @@ public class Inventory
             switch (input)
             {
                 case "1":
-                    inventory._productRepository.CreateProduct();
+                    Console.WriteLine("Add a product: ");
+                    var userInputHandler = new UserInputHandler();
+                    var name = userInputHandler.GetProductName();
+                    var isValidPrice = userInputHandler.TryGetProductPrice(out var price);
+                    var isValidQuantity = userInputHandler.TryGetProductQuantity(out var quantity);
+                    if (isValidPrice && isValidQuantity)
+                    {
+                        var newProduct = new Product
+                        {
+                            Name = name,
+                            Price = price,
+                            Quantity = quantity
+                        };
+                        inventory._productRepository.CreateProduct(newProduct);
+                    }
                     Console.ReadLine();
                     break;
 
@@ -42,26 +84,17 @@ public class Inventory
                 case "3":
                     Console.WriteLine("Please enter product name: ");
                     var ProductNameToUpdate = Console.ReadLine();
-                    inventory._productRepository.UpdateProduct(ProductNameToUpdate);
+                    var product = inventory._productRepository.GetValidProduct(ProductNameToUpdate);
+                    inventory._productRepository.UpdateProduct(product);
                     Console.ReadLine();
                     break;
 
                 case "5":
                     Console.WriteLine("Please enter product name: ");
                     var ProductName = Console.ReadLine();
-                    var product = inventory._productRepository.GetValidProduct(ProductName);
-                    if (product != null)
-                    {
-                        Console.WriteLine("The product information: ");
-                        Console.WriteLine($"The Product Name: {product.Name}");
-                        Console.WriteLine($"The Product Price: {product.Price}");
-                        Console.WriteLine($"The Product Quantity: {product.Quantity}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Product {ProductName} not found.");
-                    }
-
+                    var ToUpdatedproduct = inventory._productRepository.GetValidProduct(ProductName);
+                    Console.WriteLine($"Name: {ToUpdatedproduct.Name}, Price: {ToUpdatedproduct.Price}, Quantity: {ToUpdatedproduct.Quantity}");
+                    inventory._productRepository.UpdateProduct(ToUpdatedproduct);
                     Console.ReadLine();
                     break;
 
@@ -82,5 +115,7 @@ public class Inventory
                     break;
             }
         }
-}
+
+        return exit;
+    }
 }
